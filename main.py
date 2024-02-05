@@ -1,21 +1,31 @@
 import ssl
+import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 CERTFILE = "./localhost.pem"
 
+with open("index.html") as f:
+    index_file = f.read()
+
+with open("redirect_url.txt") as f:
+    first_line = f.readline().strip()
+
 class MyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path == "/get_test":
+        if self.path == "/button":
+            # 301 Moved Permanentlyのレスポンスを返す
+            # https://developer.mozilla.org/ja/docs/Web/HTTP/Status/301
+            self.send_response(301, "Moved Permanently")
+            self.send_header("Location", first_line)
+            self.end_headers()
+        else:
+            enc = sys.getfilesystemencoding()
             self.send_response(200)
-            self.send_header('Content-type', 'text/plain')
+            self.send_header("Content-type", "text/html; charset=%s" % enc)
             self.send_header("Cache-Control", "no-store, must-revalidate")
             self.end_headers()
-            self.wfile.write(b'Custom Response2!')
-        else:
-        # 301 Moved Permanentlyのレスポンスを返す
-            self.send_response(301)
-            self.send_header("Location", "https://www.google.com/maps")
-            self.end_headers()
+            self.wfile.write(index_file.encode(enc, 'surrogateescape'))
+
 
 def run(server_class=HTTPServer, handler_class=MyHandler, port=8000):
     context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
