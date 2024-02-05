@@ -22,6 +22,16 @@ https://localhost:8000/get_test
 → 会社PCではportを開放できない
 
 
+### WebViewで実装する場合
+
+- WebViewClientに以下のoverrideが必要
+```kt
+override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
+  handler?.proceed()
+}
+```
+
+
 
 # 参考
 
