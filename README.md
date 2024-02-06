@@ -31,7 +31,7 @@ object : WebViewClient() {
 }
 ```
 
-3. `redirect_url.txt`を設定
+3. **`redirect_url.txt`を設定**
 
 リダイレクト先として検証したいURLを`redirect_url.txt`の1行目に記載します。ここのファイルはgitの管理外です。
 例えば以下のようにすると、googleの検索ページにリダイレクトします。
@@ -40,7 +40,7 @@ echo https://www.google.co.jp/ > redirect_url.txt
 ```
 
 
-4. `main.py`を実行
+4. **`main.py`を実行**
 
 `python main.py`を実行してください。
 実行すると以下のアドレスから`index.html`にアクセスすることができます。
@@ -60,3 +60,12 @@ https://10.0.2.2:8000/
 
 - 実機の場合
 → 会社PCではportを開放できない
+
+
+6. **表示されたリンクをクリックする**
+
+画面中央上部に`Redirect to the URL of the top line in redirect_url.txt`というテキストリンクが表示されます。クリックするとリダイレクトします。
+
+|<img width="1920" alt="image" src="https://github.com/kinto-gota-hasegawa/redirect_test_server/assets/112846158/cc7d26c6-dcdf-4cbf-bb96-382c1767c4c9">|
+|:-:|
+
